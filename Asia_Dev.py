@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov  9 17:25:15 2021
+
+@author: Admin
+"""
+
+import numpy as np
+import os 
+
+import sys
+
+txt_1 = np.array([1,2,3,4,5,6])
+
+#np.savetxt('D:/Misc/AsiaMobiliti/software/testing_file.txt', txt_1, delimiter=',')
+
+save_path = 'D:\Misc\AsiaMobiliti\Dev_Board\software'
+file_name = 'testing_file.txt'
+
+completeName = os.path.join(save_path, file_name)
+print(completeName)
+
+f1 = open(completeName, "w")
+f1.write("file information")
+f1.close()
