@@ -16,7 +16,7 @@ import sys
 txt_1 = np.array([1,2,3,4,5,6])
 
 #np.savetxt('testing_file.txt', txt_1, delimiter=',')
-user_input = input('Your number?')
+
 
 def videoCapture():
   parser = argparse.ArgumentParser()
@@ -27,8 +27,8 @@ def videoCapture():
   cap = cv2.VideoCapture(args.camera_idx)
 
   # Define the codec and create VideoWriter object
-  fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-  out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (780, 540))
+  fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+  out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (640,480))
 
   while cap.isOpened():
     ret, frame = cap.read()
@@ -39,7 +39,7 @@ def videoCapture():
     cv2_im = frame
 
     cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
-    cv2_im_rgb = cv2.resize(cv2_im_rgb, (780, 540))
+    cv2_im_rgb = cv2.resize(cv2_im_rgb, (640,480))
 
     # output the frame
     out.write(cv2_im_rgb) 
@@ -58,6 +58,7 @@ def videoCapture():
 
 
 def txt_saving():
+    user_input = input('Your number?')
     if int(user_input) == 1:
         save_path = '/home/mendel/mnt/sdcard'
         file_name = 'testing_file.txt'
