@@ -16,7 +16,7 @@ txt_1 = np.array([1,2,3,4,5,6])
 user_input = input('Your number?')
 
 if int(user_input) == 1:
-    save_path = '$HOME/mnt/sdcard'
+    save_path = 'home/mendel/mnt/sdcard'
     file_name = 'testing_file.txt'
     
     completeName = os.path.join(save_path, file_name)
