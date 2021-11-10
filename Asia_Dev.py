@@ -13,7 +13,9 @@ import sys
 txt_1 = np.array([1,2,3,4,5,6])
 
 #np.savetxt('testing_file.txt', txt_1, delimiter=',')
-if False:
+user_input = input('Your number?')
+
+if int(user_input) == 1:
     save_path = '$HOME/mnt/sdcard'
     file_name = 'testing_file.txt'
     
@@ -23,7 +25,8 @@ if False:
     f1 = open(completeName, "w")
     f1.write("file information")
     f1.close()
-else:
+elif int(user_input) == 2:
     f1 = open('testing_here.txt', 'w')
     f1.write("file here")
     f1.close()
+    print("done")
