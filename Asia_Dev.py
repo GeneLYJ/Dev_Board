@@ -44,7 +44,7 @@ elif int(user_input) == 3:
     f1.close()
     
 elif int(user_input) == 4:
-    save_path = 'home/mendel/AsiaM'
+    save_path = '/home/mendel/AsiaM'
     file_name = 'test_here.txt'
     
     completeName = os.path.join(save_path, file_name)
