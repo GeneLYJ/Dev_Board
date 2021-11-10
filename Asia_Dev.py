@@ -12,14 +12,18 @@ import sys
 
 txt_1 = np.array([1,2,3,4,5,6])
 
-#np.savetxt('D:/Misc/AsiaMobiliti/software/testing_file.txt', txt_1, delimiter=',')
-
-save_path = 'D:\Misc\AsiaMobiliti\Dev_Board\software'
-file_name = 'testing_file.txt'
-
-completeName = os.path.join(save_path, file_name)
-print(completeName)
-
-f1 = open(completeName, "w")
-f1.write("file information")
-f1.close()
+#np.savetxt('testing_file.txt', txt_1, delimiter=',')
+if False:
+    save_path = '$HOME/mnt/sdcard'
+    file_name = 'testing_file.txt'
+    
+    completeName = os.path.join(save_path, file_name)
+    print(completeName)
+    
+    f1 = open(completeName, "w")
+    f1.write("file information")
+    f1.close()
+else:
+    f1 = open('testing_here.txt', 'w')
+    f1.write("file here")
+    f1.close()
