@@ -49,7 +49,7 @@ def videoCapture():
     # output the frame
     out.write(cv2_im_rgb) 
 
-    cv2.imshow('frame', cv2_im)
+    #cv2.imshow('frame', cv2_im)
     if cv2.waitKey(1) & 0xFF == ord('q'):
       break
 
@@ -59,7 +59,8 @@ def videoCapture():
   out.release() 
 
   cv2.destroyAllWindows()
-
+  
+  print('done\n')
 
 
 def txt_saving():
@@ -105,3 +106,4 @@ def txt_saving():
 
 if __name__ == '__main__':
     videoCapture()
+    print('end')
