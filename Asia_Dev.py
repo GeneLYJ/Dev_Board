@@ -33,7 +33,7 @@ elif int(user_input) == 2:
     print("done")
     
 elif int(user_input) == 3:
-    save_path = 'home/mendel/mnt'
+    save_path = 'home/mnt'
     file_name = 'test_here.txt'
     
     completeName = os.path.join(save_path, file_name)
