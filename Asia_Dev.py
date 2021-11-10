@@ -19,6 +19,11 @@ txt_1 = np.array([1,2,3,4,5,6])
 
 
 def videoCapture():
+  save_path = '/home/mendel/AsiaM'
+  file_name = 'output.mp4'
+  
+  completeName = os.path.join(save_path, file_name)
+
   parser = argparse.ArgumentParser()
   parser.add_argument('--camera_idx', type=int, help='Index of which video source to use. ', default = 0)
   args = parser.parse_args()
@@ -28,7 +33,7 @@ def videoCapture():
 
   # Define the codec and create VideoWriter object
   fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-  out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (640,480))
+  out = cv2.VideoWriter(completeName, fourcc, 20.0, (640,480))
 
   while cap.isOpened():
     ret, frame = cap.read()
