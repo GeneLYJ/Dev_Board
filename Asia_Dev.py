@@ -25,8 +25,20 @@ if int(user_input) == 1:
     f1 = open(completeName, "w")
     f1.write("file information")
     f1.close()
+    
 elif int(user_input) == 2:
     f1 = open('testing_here.txt', 'w')
     f1.write("file here")
     f1.close()
     print("done")
+    
+elif int(user_input) == 3:
+    save_path = 'home/mendel/mnt'
+    file_name = 'test_here.txt'
+    
+    completeName = os.path.join(save_path, file_name)
+    print(completeName)
+    
+    f1 = open(completeName, "w")
+    f1.write("file information")
+    f1.close()
