@@ -14,9 +14,6 @@ import cv2
 from datetime import datetime, timedelta
 
 import sys
-#import keyboard
-
-
 
 
 if __name__ == '__main__':
@@ -29,7 +26,7 @@ if __name__ == '__main__':
         cap = cv2.VideoCapture(args.camera_idx)
         
         t_format = '%Y%m%d_%H%M%S'
-        t_now = datetime.now().replace(microsecond=0)
+        t_now = datetime.now()
         
         save_path = '/home/mendel/AsiaM'
         file_name = 'output_' + t_now.strftime(t_format) + '.mp4'
@@ -37,9 +34,12 @@ if __name__ == '__main__':
         
         # Define the codec and create VideoWriter object
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        out = cv2.VideoWriter(completeName, fourcc, 20.0, (640,480))
+        fps = 24
+        dim = (640, 480)
+        out = cv2.VideoWriter(completeName, fourcc, fps, dim)
         
         print('start')
+        x = 0
         while cap.isOpened():
             ret, frame = cap.read()
         
@@ -48,20 +48,21 @@ if __name__ == '__main__':
               break
         
             cv2_im = frame
-            
+            x += 1
             # output the frame
             out.write(cv2_im) 
             
-            if datetime.now().replace(microsecond=0) == (t_now + timedelta(seconds=10)):
+            if (datetime.now() - t_now).seconds > 10:
                 out.release()
                 print('saved')
-          
-                t_now = datetime.now().replace(microsecond=0)
+                print(x)
+                x = 0
+                t_now = datetime.now()
                 file_name = 'output_' + t_now.strftime(t_format) + '.mp4'
                 completeName = os.path.join(save_path, file_name)
                 
                 # Define the codec and create VideoWriter object
-                out = cv2.VideoWriter(completeName, fourcc, 20.0, (640,480))
+                out = cv2.VideoWriter(completeName, fourcc, fps, dim)
                 
         cap.release()
     
