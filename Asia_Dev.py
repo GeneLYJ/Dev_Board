@@ -11,7 +11,7 @@ import os
 import argparse
 import cv2
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import sys
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
         
         # Define the codec and create VideoWriter object
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        fps = 24
+        fps = 30
         dim = (640, 480)
         out = cv2.VideoWriter(completeName, fourcc, fps, dim)
         
