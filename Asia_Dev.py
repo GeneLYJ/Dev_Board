@@ -41,7 +41,6 @@ def videoCapture():
   fourcc = cv2.VideoWriter_fourcc(*'mp4v')
   out = cv2.VideoWriter(completeName, fourcc, 20.0, (640,480))
 
-  print('start')
   while cap.isOpened():
     ret, frame = cap.read()
     
@@ -57,7 +56,7 @@ def videoCapture():
     # output the frame
     out.write(cv2_im) 
 
-    if datetime.now().replace(microsecond=0) == (t_now + timedelta(seconds=5)):
+    if datetime.now().replace(microsecond=0) == (t_now + timedelta(seconds=10)):
       out.release()
       print('saved')
 
@@ -126,5 +125,11 @@ def txt_saving():
         f1.close()
 
 if __name__ == '__main__':
-    videoCapture()
-    print('end')
+    print('Script started.')
+    try:
+        videoCapture()
+    except KeyboardInterrupt:
+        print('Interrupted')
+
+print('Terminate')
+sys.exit()
