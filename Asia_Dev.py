@@ -16,104 +16,46 @@ from datetime import datetime, timedelta
 import sys
 import keyboard
 
-txt_1 = np.array([1,2,3,4,5,6])
 
-#np.savetxt('testing_file.txt', txt_1, delimiter=',')
-
-
-def videoCapture():
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--camera_idx', type=int, help='Index of which video source to use. ', default = 0)
-  args = parser.parse_args()
-
-  args.camera_idx
-  cap = cv2.VideoCapture(args.camera_idx)
-
-  t_format = '%Y%m%d_%H%M%S'
-  t_now = datetime.now().replace(microsecond=0)
-  #t_start = datetime.now().replace(microsecond=0)
-
-  save_path = '/home/mendel/AsiaM'
-  file_name = 'output.mp4'
-  completeName = os.path.join(save_path, file_name)
-
-  # Define the codec and create VideoWriter object
-  fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-  out = cv2.VideoWriter(completeName, fourcc, 20.0, (640,480))
-
-  while cap.isOpened():
-    ret, frame = cap.read()
+def videoCapture(t_now, video):
+  print('recording')
+  while video.cap.isOpened():
+    ret, frame = video.cap.read()
     
     if not ret:
       print('welp')
       break
     
     cv2_im = frame
-
-    #cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
-    #cv2_im_rgb = cv2.resize(cv2_im_rgb, (640,480))
-
     # output the frame
-    out.write(cv2_im) 
+    video.out.write(cv2_im) 
 
     if datetime.now().replace(microsecond=0) == (t_now + timedelta(seconds=10)):
-      out.release()
+      video.out.release()
       print('saved')
 
       t_now = datetime.now().replace(microsecond=0)
       file_name = 'output_' + t_now.strftime(t_format) + '.mp4'
-      completeName = os.path.join(save_path, file_name)
-
-      # Define the codec and create VideoWriter object
-      out = cv2.VideoWriter(completeName, fourcc, 20.0, (640,480))
-
+      video.updatePath(file_name)
+    
+    # for displaying on the monitor
     #cv2.imshow('frame', cv2_im)
     if keyboard.is_pressed('q'):
       print('terminate')
       break
 
-  cap.release()
+  video.cap.release()
 
   # After we release our webcam, we also release the output
-  out.release() 
+  video.out.release() 
 
   cv2.destroyAllWindows()
   
   print('done')
 
-
-
 def txt_saving():
-    user_input = input('Your number?')
+    user_input = input('Your number?')        
     if int(user_input) == 1:
-        save_path = '/home/mendel/mnt/sdcard'
-        file_name = 'testing_file.txt'
-        
-        completeName = os.path.join(save_path, file_name)
-        print(completeName)
-        
-        f1 = open(completeName, "w+")
-        f1.write("file information")
-        f1.close()
-        
-    elif int(user_input) == 2:
-        f1 = open('testing_here.txt', 'w+')
-        f1.write("file here")
-        f1.close()
-        print("done")
-        
-    elif int(user_input) == 3:
-        save_path = '/home/mnt'
-        file_name = 'test_here.txt'
-        
-        completeName = os.path.join(save_path, file_name)
-        print(completeName)
-        
-        f1 = open(completeName, "w+")
-        f1.write("file information")
-        f1.close()
-        
-    elif int(user_input) == 4:
         save_path = '/home/mendel/AsiaM'
         file_name = 'test_here.txt'
         
@@ -124,12 +66,48 @@ def txt_saving():
         f1.write("file information")
         f1.close()
 
+class RecordFiles:
+  def __init__(self, save_path, file_name, video_format, videoCapture):
+    self.save_path = save_path
+    self.file_name = file_name
+    self.completeName = os.path.join(self.save_path, self.file_name)
+
+    self.format = video_format
+    self.fourcc = cv2.VideoWriter_fourcc(*self.format)
+    self.cap = cv2.VideoCapture(videoCapture)
+    self.out = cv2.VideoWriter(self.completeName, self.fourcc, 20.0, (640, 480))
+
+  def updatePath(self, file_name):
+    self.file_name = file_name
+    self.completeName = os.path.join(self.save_path, self.file_name)
+    
+    # Define the codec and create VideoWriter object
+    self.out = cv2.VideoWriter(self.completeName, self.fourcc, 20.0, (640, 480))
+
+
 if __name__ == '__main__':
     print('Script started.')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--camera_idx', type=int, help='Index of which video source to use. ', default = 0)
+    args = parser.parse_args()
+      
+    t_format = '%Y%m%d_%H%M%S'
+    t_now = datetime.now().replace(microsecond=0)
+  
+    save_path = '/home/mendel/AsiaM'
+    file_name = 'output.mp4'
+  
+    videoFormat = 'mp4v'
+    
+    video = RecordFiles(save_path, file_name, videoFormat, args.camera_idx)
+    
     try:
-        videoCapture()
+        videoCapture(t_now, video)
     except KeyboardInterrupt:
         print('Interrupted')
-
+        video.cap.release()
+        video.out.release()
+        cv2.destroyAllWindows()
+        
 print('Terminate')
 sys.exit()
