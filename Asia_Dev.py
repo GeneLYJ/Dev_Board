@@ -54,8 +54,8 @@ if __name__ == '__main__':
             
             if (datetime.now() - t_now).seconds > 10:
                 out.release()
-                print('saved')
-                print(x)
+                #print('saved')
+                #print(x)
                 x = 0
                 t_now = datetime.now()
                 file_name = 'output_' + t_now.strftime(t_format) + '.mp4'
