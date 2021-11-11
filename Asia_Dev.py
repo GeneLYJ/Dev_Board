@@ -14,7 +14,7 @@ import cv2
 from datetime import datetime, timedelta
 
 import sys
-import keyboard
+#import keyboard
 
 
 def videoCapture(t_now, video):
@@ -40,9 +40,9 @@ def videoCapture(t_now, video):
     
     # for displaying on the monitor
     #cv2.imshow('frame', cv2_im)
-    if keyboard.is_pressed('q'):
-      print('terminate')
-      break
+    #if keyboard.is_pressed('q'):
+    #  print('terminate')
+    #  break
 
   video.cap.release()
 
